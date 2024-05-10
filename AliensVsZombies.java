@@ -12,6 +12,7 @@ public class AliensVsZombies{
         do{
             System.out.println("Quanto per lato deve essere lungo il banco di gioco?\n Puo' esserlo massimo 8 caselle:");
             size=scanner.nextInt();
+            scanner.nextLine();
             
             if (size > 8 || size < 2) {
                 System.out.println("Errore: dimensione non valida! La dimensione deve essere compresa tra 2 e 8.");
@@ -24,6 +25,7 @@ public class AliensVsZombies{
         do{
             System.out.println("Quanti personaggi per squadra vuoi inserire (almeno uno e massimo "+size+"):");
             numPersonaggi=scanner.nextInt();
+            scanner.nextLine();
             
             if (numPersonaggi < 1 || numPersonaggi > size) {
                 System.out.println("Errore: Il numero dei personaggi non e' incline al game!");
@@ -37,37 +39,43 @@ public class AliensVsZombies{
             System.out.println("Quale scegli tra (A / Alieni e Z / Zombies): ");
             
             do{
-                pedina=scanner.nextLine();    
-                scanner.nextInt();
-            }while(pedina!="A"||pedina!="a"||pedina!="Z"||pedina!="z");
-            System.out.println(pedina);
+                pedina=scanner.nextLine();
+                if(!pedina.equals("A") && !pedina.equals("Z")){
+                    System.out.println("Personaggio non valido.");
+                }
+            }while(!pedina.equals("A") && !pedina.equals("Z"));
+
             for(int j=0;j<campo.getGrid().length;j++){
                 for(int i=0;i<campo.getGrid().length;i++){
-                    if(campo.whois(i, j) instanceof Zombies && (pedina=="Z" | pedina=="z")){
+                    if(campo.whois(i, j) instanceof Zombies && (pedina.equals("Z"))){
                         System.out.print("Z ("+i+";"+j+") ");
                         personaggi.add(campo.whois(i, j));
                     }
-                    else if(campo.whois(i, j) instanceof Aliens && (pedina=="A" | pedina=="a")){
+                    else if(campo.whois(i, j) instanceof Aliens && (pedina.equals("A"))){
                         System.out.print("A ("+i+";"+j+") ");
                         personaggi.add(campo.whois(i, j));
                     }
                 }
             }
-            
-            System.out.print("/n"); 
+            System.out.print("\n"); 
             int x;
             int y;
             do{
                 System.out.println("Controlla il personaggio alle coordinate X:");
                 x=scanner.nextInt();
+                scanner.nextLine();
                 System.out.println("Anche quelle delle coordinate Y:");
                 y=scanner.nextInt();
-                
-                if(!campo.isValidPosition(x, y)){
+                scanner.nextLine();
+                System.out.println(campo.whois(x,y));
+                if(campo.isValidPosition(x, y)){
                     System.out.println("Posizione non valida! Ritenta!");
                 }
-            }while(!campo.isValidPosition(x, y));
+            }while(campo.isValidPosition(x, y));
+            System.out.println("Posizione valida!!");
             if (personaggi.contains(campo.whois(x, y))) {
+                System.out.println("Personaggio mosso!!");
+                System.out.println("("+x+";"+y+")");
                 campo.whois(x, y).move(campo);
             }
             else{

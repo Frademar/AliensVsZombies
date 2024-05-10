@@ -22,12 +22,12 @@ public class Zombies extends Personaggio{
     
     @Override
     public void move(Campo campo){
-        if(campo.isValidPosition(super.getX(), super.getY()+1)==false){
+        System.out.println("Zombies");
+        
+        if(campo.isValidPosition(super.getX(), super.getY()+1)){
             System.out.println("Posizione non valida sei arrivato al margine del banco.");
         }
         else{
-            System.out.println("X: "+super.getX());
-            System.out.println("Y: "+super.getY());
             campo.placePersonaggio(super.getX(), super.getY()+1, campo.whois(super.getX(), super.getY()));
         }
     }

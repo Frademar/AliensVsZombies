@@ -13,30 +13,39 @@ public class Campo{
     public void removePersonaggio(int x, int y){
         System.out.println("X1: "+x);
         System.out.println("Y1: "+y);
-        this.grid[x][y].die();
         this.grid[x][y]=null;
     }
 // Con l'upcasting di java è possibile assegnare una della specializzazioni della classe generica padre ad un suo riferimento.
     public void placePersonaggio(int x, int y, Personaggio personaggio){
         if(this.grid[x][y] instanceof Zombies){
+            
             Zombies.setCountZombies(Zombies.getCountZombies()-1);
+            this.grid[x][y].die();
             this.grid[x][y]=personaggio;
-            this.removePersonaggio(x-1, y);
+            this.removePersonaggio(x, y-1);
 
         }else if(this.grid[x][y] instanceof Aliens){
+            
             Aliens.setCountAliens(Aliens.getCountAliens()-1);
+            this.grid[x][y].die();
             this.grid[x][y]=personaggio;
             this.removePersonaggio(x-1, y-1);
         }else{
             this.grid[x][y]=personaggio;
+            if(this.grid[x][y] instanceof Zombies){
+                this.removePersonaggio(x,y-1);
+            }else{
+                this.removePersonaggio(x-1,y-1);
+            }
         }
     }
 // Stabiliamo che la posizione dove si vuole muovere il personaggio sia consona alla dimensione del campo
     public boolean isValidPosition(int x, int y){
-        if(x > this.grid.length || x < 2 || y > this.grid.length || y < 2){
-            return false;
-        }else{
+        
+        if(x > this.grid.length || x < 0 || y > this.grid.length || y < 0){
             return true;
+        }else{
+            return false;
         }
     }
 // Inizializiamo la nostra scacchiera con tutte le caselle false perche all'inizio al tavolo non partecipa nessun personaggio.
