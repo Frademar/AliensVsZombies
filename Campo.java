@@ -11,6 +11,8 @@ public class Campo{
     }
 // Indichiamo alla nostra API, nell'occasione di liberare una cella da un personaggio, con l'attributo vivo per determinare una cella con nessuna proprietà.
     public void removePersonaggio(int x, int y){
+        System.out.println("X1: "+x);
+        System.out.println("Y1: "+y);
         this.grid[x][y].die();
         this.grid[x][y]=null;
     }
@@ -19,12 +21,12 @@ public class Campo{
         if(this.grid[x][y] instanceof Zombies){
             Zombies.setCountZombies(Zombies.getCountZombies()-1);
             this.grid[x][y]=personaggio;
-            this.removePersonaggio(x, y);
+            this.removePersonaggio(x-1, y);
 
         }else if(this.grid[x][y] instanceof Aliens){
             Aliens.setCountAliens(Aliens.getCountAliens()-1);
             this.grid[x][y]=personaggio;
-            this.removePersonaggio(x, y);
+            this.removePersonaggio(x-1, y-1);
         }else{
             this.grid[x][y]=personaggio;
         }
@@ -69,7 +71,7 @@ public class Campo{
         else if(Aliens.getCountAliens()==0){
             return true;
         }else{
-            return false,
+            return false;
         }
     }
 }

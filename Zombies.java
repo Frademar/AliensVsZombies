@@ -26,6 +26,8 @@ public class Zombies extends Personaggio{
             System.out.println("Posizione non valida sei arrivato al margine del banco.");
         }
         else{
+            System.out.println("X: "+super.getX());
+            System.out.println("Y: "+super.getY());
             campo.placePersonaggio(super.getX(), super.getY()+1, campo.whois(super.getX(), super.getY()));
         }
     }
